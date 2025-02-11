@@ -16,7 +16,9 @@ export async function getStaticPaths() {
 const { personne } = Astro.props;
 const { Content } = await render(personne);
 
-const profession = personne.data.profession && [...new Set (personne.data.profession)];
+const profession = personne.data.profession && [
+  ...new Set(personne.data.profession),
+];
 ---
 
 <Layout pageTitle={`Fiche de ${personne.data.nom}`}>
@@ -58,10 +60,8 @@ const profession = personne.data.profession && [...new Set (personne.data.profes
     {
       profession && (
         <p class="text-lg text-gray-700">
-          <strong>
-            💼 Profession{profession.length > 1 ? "s" : ""} :
-          </strong>{" "}
-          {profession.join(", ")}
+          <strong>💼 Profession{profession.length > 1 ? "s" : ""} :</strong>{" "}
+          {profession.join(", ").replace(/,([^,]*)$/, " et $1")}
         </p>
       )
     }
