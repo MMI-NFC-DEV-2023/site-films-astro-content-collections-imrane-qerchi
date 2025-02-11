@@ -1,5 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { getEntries } from "astro:content";
 import { getCollection, getEntry, render } from "astro:content";
 import { formatDate } from "src/helper";
 
@@ -18,6 +19,9 @@ const { Content } = await render(film);
 
 const realisateur =
   film.data.realisateur && (await getEntry(film.data.realisateur));
+
+const scenaristes =
+  film.data.scenaristes && (await getEntries(film.data.scenaristes));
 ---
 
 <Layout pageTitle={`Film : ${film.data.titre}`}>
@@ -39,6 +43,23 @@ const realisateur =
           >
             {realisateur.data.nom}
           </a>
+        </p>
+      )
+    }
+
+    {
+      scenaristes && scenaristes.length > 0 && (
+        <p class="text-lg text-gray-700">
+          <strong>✍️ Scénariste{scenaristes.length > 1 ? "s" : ""} :</strong>
+          <span
+            set:html={scenaristes
+              .map(
+                (s) =>
+                  `<a href="/personnes/${s.id}" class="text-blue-600 hover:underline">${s.data.nom}</a>`
+              )
+              .join(", ")
+              .replace(/,([^,]*)$/, " et$1")}
+          ></span>
         </p>
       )
     }

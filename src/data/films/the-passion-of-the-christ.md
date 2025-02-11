@@ -2,6 +2,7 @@
 titre: The Passion of the Christ
 dateSortie: 2004-02-25
 realisateur: "mel-gibson"
+scenaristes: ["mel-gibson"]
 ---
 
 # The Passion of the Christ
