@@ -3,6 +3,10 @@ nom: Robert De Niro
 lieuNaissance: New York, États-Unis
 dateNaissance: 1943-08-17
 nationalite: US
+profession:
+- acteur
+- réalisateur
+- producteur
 ---
 
 # Biographie de Robert De Niro

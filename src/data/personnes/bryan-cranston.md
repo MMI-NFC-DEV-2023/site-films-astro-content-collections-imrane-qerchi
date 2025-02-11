@@ -3,6 +3,10 @@ nom: Bryan Cranston
 lieuNaissance: Hollywood, Californie, États-Unis
 dateNaissance: 1956-03-07
 nationalite: US
+profession:
+- acteur
+- réalisateur
+- producteur
 ---
 
 # Biographie de Bryan Cranston

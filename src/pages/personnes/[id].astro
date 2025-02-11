@@ -53,6 +53,17 @@ const { Content } = await render(personne);
       {personne.data.nationalite}
     </p>
 
+    {
+      personne.data.profession && (
+        <p class="text-lg text-gray-700">
+          <strong>
+            💼 Profession{personne.data.profession.length > 1 ? "s" : ""} :
+          </strong>{" "}
+          {personne.data.profession.join(", ")}
+        </p>
+      )
+    }
+
     <div class="prose prose-lg mt-6">
       <Content />
     </div>

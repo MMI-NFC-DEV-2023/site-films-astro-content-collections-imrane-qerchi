@@ -3,6 +3,10 @@ nom: Mel Gibson
 lieuNaissance: Peekskill, New York, États-Unis
 dateNaissance: 1956-01-03
 nationalite: US
+profession:
+- acteur
+- réalisateur
+- producteur
 ---
 
 # Biographie de Mel Gibson
