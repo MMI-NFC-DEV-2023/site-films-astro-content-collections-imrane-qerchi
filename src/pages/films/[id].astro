@@ -1,0 +1,57 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getCollection, getEntry, render } from "astro:content";
+import { formatDate } from "src/helper";
+
+// Générer les chemins statiques
+export async function getStaticPaths() {
+  const films = await getCollection("films");
+  return films.map((film) => ({
+    params: { id: film.id },
+    props: { film },
+  }));
+}
+
+// Récupérer le film demandé
+const { film } = Astro.props;
+const { Content } = await render(film);
+
+const realisateur =
+  film.data.realisateur && (await getEntry(film.data.realisateur));
+---
+
+<Layout pageTitle={`Film : ${film.data.titre}`}>
+  <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">{film.data.titre}</h1>
+
+    <p class="text-lg text-gray-700">
+      <strong>📅 Date de sortie :</strong>
+      {formatDate(film.data.dateSortie)}
+    </p>
+
+    {
+      realisateur && (
+        <p class="text-lg text-gray-700">
+          <strong>🎬 Réalisateur :</strong>
+          <a
+            href={`/personnes/${realisateur.id}`}
+            class="text-blue-600 hover:underline"
+          >
+            {realisateur.data.nom}
+          </a>
+        </p>
+      )
+    }
+
+    <div class="prose prose-lg mt-6">
+      <Content />
+    </div>
+
+    <a
+      href="/films"
+      class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition"
+    >
+      🔙 Retour à la liste
+    </a>
+  </div>
+</Layout>
