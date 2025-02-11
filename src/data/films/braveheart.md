@@ -2,6 +2,9 @@
 titre: Braveheart
 dateSortie: 1995-05-24
 realisateur: "mel-gibson"
+roles:
+  - acteur: mel-gibson
+    role: William Walace
 ---
 
 # Braveheart

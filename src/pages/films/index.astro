@@ -1,33 +1,38 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import { formatDate } from "src/helper";
 
+// Récupération des films
 const films = await getCollection("films");
 ---
 
 <Layout pageTitle="Films">
   <div class="max-w-4xl mx-auto p-6">
     <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
-      Liste des Films 🎬
+      🎬 Liste des Films
     </h1>
 
-    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {
-        films.map((film) => (
-          <li class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <a
-              href={`./films/${film.id}`}
-              class="block text-lg font-semibold text-blue-600 hover:underline"
-            >
-              {film.data.titre}
-            </a>
-            <p class="text-gray-600 text-sm mt-2">
-              📅 Sortie :{" "}
-              {new Date(film.data.dateSortie).toLocaleDateString("fr-FR")}
-            </p>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      films.length === 0 ? (
+        <p class="text-center text-gray-600">Aucun film disponible.</p>
+      ) : (
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {films.map((film) => (
+            <li class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow">
+              <a
+                href={`/films/${film.id}`}
+                class="block text-lg font-semibold text-blue-600 hover:underline"
+              >
+                {film.data.titre}
+              </a>
+              <p class="text-gray-600 text-sm mt-2">
+                📅 Sortie : {formatDate(film.data.dateSortie)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
   </div>
 </Layout>

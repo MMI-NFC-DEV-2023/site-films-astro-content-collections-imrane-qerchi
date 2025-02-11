@@ -22,6 +22,16 @@ const realisateur =
 
 const scenaristes =
   film.data.scenaristes && (await getEntries(film.data.scenaristes));
+
+const roles =
+  (film.data.roles &&
+    (await Promise.all(
+      film.data.roles.map(async (r) => ({
+        role: r.role,
+        personne: await getEntry(r.acteur),
+      }))
+    ))) ||
+  [];
 ---
 
 <Layout pageTitle={`Film : ${film.data.titre}`}>
@@ -59,8 +69,31 @@ const scenaristes =
               )
               .join(", ")
               .replace(/,([^,]*)$/, " et$1")}
-          ></span>
+          />
         </p>
+      )
+    }
+
+    {
+      roles.length > 0 && (
+        <div class="mt-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-3">
+            🎭 Rôles principaux
+          </h2>
+          <ul class="list-disc pl-5">
+            {roles.map((r) => (
+              <li>
+                <strong>{r.role}</strong> joué par
+                <a
+                  href={`/personnes/${r.personne.id}`}
+                  class="text-blue-600 hover:underline"
+                >
+                  {r.personne.data.nom}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       )
     }
 
