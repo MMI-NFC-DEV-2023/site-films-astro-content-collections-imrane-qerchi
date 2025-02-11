@@ -7,7 +7,7 @@ const personnes = defineCollection({
     nom: z.string(),
     lieuNaissance: z.string(),
     dateNaissance: z.date(),
-    dateDeces: z.string().nullable().optional(),
+    dateDeces: z.date().nullable().optional(),
     lieuDeces: z.string().optional(),
     nationalite: z.string(),
   }),

@@ -1,0 +1,67 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+import { formatDate } from "src/helper";
+
+// Générer les chemins statiques
+export async function getStaticPaths() {
+  const personnes = await getCollection("personnes");
+  return personnes.map((personne) => ({
+    params: { id: personne.id },
+    props: { personne },
+  }));
+}
+
+// Récupérer la personne demandée
+const { personne } = Astro.props;
+const { Content } = await render(personne);
+---
+
+<Layout pageTitle={`Fiche de ${personne.data.nom}`}>
+  <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">{personne.data.nom}</h1>
+
+    <p class="text-lg text-gray-700">
+      <strong>📍 Lieu de naissance :</strong>
+      {personne.data.lieuNaissance}
+    </p>
+
+    <p class="text-lg text-gray-700">
+      <strong>📅 Date de naissance :</strong>
+      {formatDate(personne.data.dateNaissance)}
+    </p>
+
+    {
+      personne.data.dateDeces && (
+        <p class="text-lg text-red-600">
+          <strong>🕊️ Date de décès :</strong>{" "}
+          {formatDate(personne.data.dateDeces)}
+        </p>
+      )
+    }
+
+    {
+      personne.data.lieuDeces && (
+        <p class="text-lg text-gray-700">
+          <strong>🕊️ Lieu de décès :</strong> {personne.data.lieuDeces}
+        </p>
+      )
+    }
+
+    <p class="text-lg text-gray-700">
+      <strong>🌍 Nationalité :</strong>
+      {personne.data.nationalite}
+    </p>
+
+    <div class="prose prose-lg mt-6">
+      <Content />
+    </div>
+
+    <a
+      href="/personnes"
+      class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition"
+    >
+      🔙 Retour à la liste
+    </a>
+  </div>
+</Layout>
