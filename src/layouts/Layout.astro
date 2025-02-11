@@ -16,13 +16,30 @@ const { pageTitle } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body>
-    <nav>
-      <ul>
-        <li><a href="/personnes">Liste des personnes</a></li>
-      </ul>
+  <body class="bg-gray-100 text-gray-900 font-sans">
+    <!-- Barre de navigation -->
+    <nav class="bg-blue-600 text-white py-4 shadow-md">
+      <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
+        <a href="/" class="text-xl font-bold">Répertoire de films</a>
+        <ul class="flex space-x-6">
+          <li>
+            <a href="/personnes" class="hover:underline text-lg"
+              >Acteurs</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
-    <slot />
+
+    <!-- Contenu dynamique -->
+    <main class="max-w-4xl mx-auto p-6">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-gray-500 text-sm py-4">
+      © {new Date().getFullYear()} Répertoire de films - Tous droits réservés.
+    </footer>
   </body>
 </html>
 
