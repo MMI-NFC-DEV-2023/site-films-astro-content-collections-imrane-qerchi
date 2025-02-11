@@ -1,4 +1,5 @@
 ---
+import LinkPersonne from "@components/LinkPersonne.astro";
 import Layout from "@layouts/Layout.astro";
 import { getEntries } from "astro:content";
 import { getCollection, getEntry, render } from "astro:content";
@@ -46,35 +47,27 @@ const roles =
       realisateur && (
         <p class="text-lg text-gray-700">
           <strong>🎬 Réalisateur :</strong>
-          <a
-            href={`/personnes/${realisateur.id}`}
-            class="text-blue-600 hover:underline"
-          >
-            {realisateur.data.nom}
-          </a>
+          <LinkPersonne personne={realisateur} />
         </p>
       )
     }
 
     {
-      scenaristes && (
+      scenaristes && scenaristes.length > 0 && (
         <p class="text-lg text-gray-700">
           <strong>✍️ Scénariste{scenaristes.length > 1 ? "s" : ""} :</strong>
-          <span
-            set:html={scenaristes
-              .map(
-                (s) =>
-                  `<a href="/personnes/${s.id}" class="text-blue-600 hover:underline">${s.data.nom}</a>`
-              )
-              .join(", ")
-              .replace(/,([^,]*)$/, " et$1")}
-          />
+          {scenaristes.map((s, index) => (
+            <>
+              <LinkPersonne personne={s} />
+              {index < scenaristes.length - 1 ? ", " : ""}
+            </>
+          ))}
         </p>
       )
     }
 
     {
-      roles && (
+      roles && roles.length > 0 && (
         <div class="mt-6">
           <h2 class="text-xl font-semibold text-gray-800 mb-3">
             🎭 Rôles principaux
@@ -82,13 +75,8 @@ const roles =
           <ul class="list-disc pl-5">
             {roles.map((r) => (
               <li>
-                <strong>{r.role}</strong> joué par
-                <a
-                  href={`/personnes/${r.acteur.id}`}
-                  class="text-blue-600 hover:underline"
-                >
-                  {r.acteur.data.nom}
-                </a>
+                <strong>{r.role}</strong> joué par{" "}
+                <LinkPersonne personne={r.acteur} />
               </li>
             ))}
           </ul>

@@ -1,0 +1,7 @@
+---
+const { personne } = Astro.props;
+---
+
+<>: <a href={`/personnes/${personne.id}`} class="text-blue-600 hover:underline"
+    >{personne.data.nom}</a
+  ></>
