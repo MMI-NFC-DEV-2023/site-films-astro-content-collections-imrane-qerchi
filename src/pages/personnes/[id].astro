@@ -25,6 +25,10 @@ const profession = personne.data.profession && [
 const filmsRealisateur = [...(await getCollection("films"))].filter(
   (film) => film.data?.realisateur?.id === personne.id
 );
+
+const filmsScenaristes = [...(await getCollection("films"))].filter((film) =>
+  film.data?.scenaristes?.some((s) => s.id === personne.id)
+);
 ---
 
 <Layout pageTitle={`Fiche de ${personne.data.nom}`}>
@@ -77,6 +81,15 @@ const filmsRealisateur = [...(await getCollection("films"))].filter(
         <p class="text-lg text-gray-700">
           <strong>🎬 Films réalisés :</strong>{" "}
           <ListeLinkFilm films={filmsRealisateur} />
+        </p>
+      )
+    }
+
+    {
+      filmsScenaristes.length > 0 && (
+        <p class="text-lg text-gray-700">
+          <strong>📝 Films scénarisés :</strong>{" "}
+          <ListeLinkFilm films={filmsScenaristes} />
         </p>
       )
     }
