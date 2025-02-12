@@ -1,5 +1,6 @@
 ---
 import LinkFilm from "@components/LinkFilm.astro";
+import ListeLinkFilm from "@components/ListeLinkFilm.astro";
 import Layout from "@layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
 import { formatDate } from "src/helper";
@@ -75,13 +76,7 @@ const filmsRealisateur = [...(await getCollection("films"))].filter(
       filmsRealisateur.length > 0 && (
         <p class="text-lg text-gray-700">
           <strong>🎬 Films réalisés :</strong>{" "}
-          {filmsRealisateur.map((film, index) => (
-            <>
-              <LinkFilm {...film} />
-              {index < filmsRealisateur.length - 2 ? ", " : ""}
-              {index === filmsRealisateur.length - 2 ? " et " : ""}
-            </>
-          ))}
+          <ListeLinkFilm films={filmsRealisateur} />
         </p>
       )
     }
