@@ -29,6 +29,10 @@ const filmsRealisateur = [...(await getCollection("films"))].filter(
 const filmsScenaristes = [...(await getCollection("films"))].filter((film) =>
   film.data?.scenaristes?.some((s) => s.id === personne.id)
 );
+
+const filmsRoles = [...(await getCollection("films"))].filter((film) =>
+  film.data?.roles?.some((r) => r.acteur.id === personne.id)
+);
 ---
 
 <Layout pageTitle={`Fiche de ${personne.data.nom}`}>
@@ -90,6 +94,22 @@ const filmsScenaristes = [...(await getCollection("films"))].filter((film) =>
         <p class="text-lg text-gray-700">
           <strong>📝 Films scénarisés :</strong>{" "}
           <ListeLinkFilm films={filmsScenaristes} />
+        </p>
+      )
+    }
+
+    {
+      filmsRoles.length > 0 && (
+        <p class="text-lg text-gray-700">
+          <strong>🎭 Films dans lesquels il/elle a joué :</strong>{" "}
+          {filmsRoles.map((film, index) => (
+            <>
+              <LinkFilm {...film} /> en tant que{" "}
+              {film.data.roles?.find((r) => r.acteur.id === personne.id)?.role}
+              {index < filmsRoles.length - 2 ? ", " : ""}
+              {index === filmsRoles.length - 2 ? " et " : ""}
+            </>
+          ))}
         </p>
       )
     }
